@@ -4,6 +4,12 @@ from docx.shared import Pt
 def add(new):
     document = Document('./dictionary/Dictionary.docx')
 
+    core_properties = document.core_properties
+    core_properties.author = "Dictionary"
+
+    last_modified_by = document.core_properties
+    last_modified_by.last_modified_by = "Dictionary"
+    
     a = []
     for i in document.paragraphs:
         if i != '':
@@ -24,6 +30,12 @@ def add(new):
 
 def remove_i_paragraph(paragraph):
     document = Document('./dictionary/Dictionary.docx')
+
+    core_properties = document.core_properties
+    core_properties.author = "Dictionary"
+
+    last_modified_by = document.core_properties
+    last_modified_by.last_modified_by = "Dictionary"
 
     for i in document.paragraphs:
         if i.text == paragraph:

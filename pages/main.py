@@ -12,7 +12,11 @@ class MainPage:
 
         buttons = ft.Row([
             ft.Container(
-                content=ft.Text("Add word"), 
+                content=ft.Column([
+                    ft.Icon(name=ft.Icons.ADD, color=ft.colors.GREEN, size=35),
+                    ft.Text("Add word", size=18)],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER),
                 alignment=ft.alignment.center,
                 on_click=lambda e: page.go('/add'),
                 ink=True,
@@ -22,7 +26,11 @@ class MainPage:
                 border=ft.border.all(1, ft.colors.GREEN),
                 border_radius=10),
             ft.Container(
-                content=ft.Text("Show words"), 
+                content=ft.Column([
+                    ft.Icon(name=ft.Icons.BOOK, color=ft.colors.PURPLE, size=35),
+                    ft.Text("Show words", size=18)],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER),
                 alignment=ft.alignment.center,
                 on_click=lambda e: page.go('/show'),
                 ink=True,
