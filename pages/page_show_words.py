@@ -1,6 +1,7 @@
 import flet as ft
 import script
-import pages.trash
+import pages.page_trash
+import settings
 from flet_route import Params, Basket
 
 class ShowWords:
@@ -61,9 +62,9 @@ class ShowWords:
         for word in words_to_delete:
             script.remove_i_paragraph(word)
             
-        pages.trash.trash_list.extend(words_to_delete)
-        while len(pages.trash.trash_list) > 10:
-            pages.trash.trash_list.remove(pages.trash.trash_list[-1])
+        pages.page_trash.trash_list.extend(words_to_delete)
+        while len(pages.page_trash.trash_list) > 10:
+            pages.page_trash.trash_list.remove(pages.page_trash.trash_list[-1])
         self.selected_words.clear()
         page.update()
 
@@ -76,11 +77,11 @@ class ShowWords:
         edit_word = ft.TextField(label=f'Edit "{data[index]}":', value=data[index], width=200)
         confirm_button = ft.ElevatedButton(
             "Confirm Edit", 
-            color=ft.colors.PURPLE,
+            color=settings.show_words_color,
             on_click=lambda _: self.confirm_edit(page, index, edit_word))
         cancel_button = ft.IconButton(
             icon=ft.icons.CLOSE, 
-            icon_color=ft.colors.PURPLE, 
+            icon_color=settings.show_words_color, 
             on_click=lambda _: self.cancel_edit(page, index))
         edit_row = ft.Row([edit_word, confirm_button, cancel_button])
         self.result_data.controls[index].controls[1] = edit_row
@@ -99,7 +100,7 @@ class ShowWords:
         self.result_data.controls[index].controls[2] = ft.Text(script.get_words()[index], size=20, selectable=True)
         self.result_data.controls[index].controls[1] = ft.IconButton(
             icon=ft.icons.CREATE_OUTLINED,
-            icon_color=ft.colors.PURPLE,
+            icon_color=settings.show_words_color,
             on_click=lambda e: self.word_edit(page, e))
         page.update()
 
@@ -110,7 +111,7 @@ class ShowWords:
         self.result_data.controls[index].controls[2] = ft.Text(script.get_words()[index], size=20, selectable=True)
         self.result_data.controls[index].controls[1] = ft.IconButton(
             icon=ft.icons.CREATE_OUTLINED,
-            icon_color=ft.colors.PURPLE,
+            icon_color=settings.show_words_color,
             on_click=lambda e: self.word_edit(page, e))
         page.update()
 
@@ -162,7 +163,7 @@ class ShowWords:
         result_con = ft.Container(
             padding=10,
             margin=10,
-            border=ft.border.all(1, ft.colors.PURPLE),
+            border=ft.border.all(1, settings.show_words_color),
             offset=ft.transform.Offset(-2, 0),
             content=ft.Column([self.result_data]),
         )
@@ -170,7 +171,7 @@ class ShowWords:
         self.select_all_checkbox = ft.Checkbox(
             label="Select All",
             value=False,
-            active_color=ft.colors.PURPLE,
+            active_color=settings.show_words_color,
             on_change=lambda e: self.toggle_all_selection(page, e)
         )
 
@@ -178,11 +179,11 @@ class ShowWords:
             result_con.offset = ft.transform.Offset(0, 0)
             row = ft.Row([
                 ft.Checkbox(value=False,
-                           active_color=ft.colors.PURPLE, 
+                           active_color=settings.show_words_color, 
                            on_change=lambda e: self.toggle_selection(page, e)),
                 ft.IconButton(
                     icon=ft.icons.CREATE_OUTLINED,
-                    icon_color=ft.colors.PURPLE,
+                    icon_color=settings.show_words_color,
                     on_click=lambda e: self.word_edit(page, e)),
                 ft.Text(word, size=20, selectable=True)
             ], spacing=10)
@@ -192,9 +193,9 @@ class ShowWords:
         upper_row = ft.Row([
             ft.IconButton(icon=ft.icons.ARROW_BACK,
                          on_click=lambda e: page.go('/'),
-                         icon_color=ft.colors.PURPLE),
+                         icon_color=settings.show_words_color),
             ft.IconButton(icon=ft.icons.DELETE,
-                         icon_color=ft.colors.PURPLE,
+                         icon_color=settings.show_words_color,
                          on_click=lambda _: self.bulk_delete(page))
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 

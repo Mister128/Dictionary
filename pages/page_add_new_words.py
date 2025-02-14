@@ -1,6 +1,7 @@
 import flet as ft
 from flet_route import Params, Basket
 import script
+import settings
 
 class AddWords:
     def view(self, page: ft.Page, params, basket: Basket):
@@ -22,16 +23,16 @@ class AddWords:
 
         back = ft.IconButton(
             icon=ft.icons.ARROW_BACK,
-            icon_color=ft.colors.GREEN,
+            icon_color=settings.add_word_color,
             on_click=lambda e: page.go('/'))
         
         add = ft.Column([
             ft.TextField(
                 label="Enter",
-                border_color=ft.colors.GREEN),
+                border_color=settings.add_word_color),
             ft.ElevatedButton(
                 text="Add word", 
-                color=ft.colors.GREEN,
+                color=settings.add_word_color,
                 on_click=add_new)
             ])
         
@@ -39,7 +40,7 @@ class AddWords:
             title=ft.Row(
                 controls=[
                     ft.Icon(ft.icons.WARNING_SHARP,
-                            color=ft.colors.GREEN,
+                            color=settings.add_word_color,
                             size=50),
                     ft.Text("Enter the word!")]
             )
