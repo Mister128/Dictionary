@@ -3,9 +3,8 @@ from flet_route import Params, Basket
 import script
 import settings
 
-class AddWords:
+class PageAddWords:
     def view(self, page: ft.Page, params, basket: Basket):
-
         page.title = "Add"
 
         #----------------------------------------------------------------------------
@@ -15,7 +14,7 @@ class AddWords:
                 page.open(check_info_alert)
             else:
                 new = add.controls[0].value
-                script.add(new)
+                script.add_word(new)
                 add.controls[0].value = ''
                 page.update()
 

@@ -4,12 +4,12 @@ import script
 
 trash_list = []
 
-class TrashBin:
+class PageTrash:
     def __init__(self):
         self.trash = None
 
     def word_add(self, page, e, word):
-        script.add(word)
+        script.add_word(word)
         trash_list.remove(word)
         self.trash.controls.pop(e.control.parent.index)
         page.update()
@@ -19,6 +19,8 @@ class TrashBin:
     def view(self, page: ft.Page, params, basket: Basket):
         page.window.height = 600
         page.title = "trash"
+
+        #----------------------------------------------------------------------------
 
         self.trash = ft.ListView(height=400, expand=0, spacing=10, clip_behavior=ft.ClipBehavior.ANTI_ALIAS)
 
@@ -30,20 +32,22 @@ class TrashBin:
         trash_container = ft.Container(
             padding=10,
             margin=10,
-            border=ft.border.all(1, "#6b6773"),
+            border=ft.border.all(1, "#D1D1D1"),
             offset=ft.transform.Offset(-2, 0),
             content=ft.Column([self.trash]),
         )
 
         back = ft.IconButton(icon=ft.icons.ARROW_BACK, 
                             on_click=lambda e: page.go('/'), 
-                            icon_color="#6b6773")
+                            icon_color="#D1D1D1")
+        
+        #----------------------------------------------------------------------------
         
         for i, word in enumerate(trash_list):
             trash_container.offset = ft.transform.Offset(0, 0)
             row = ft.Row([
                 ft.IconButton(icon=ft.icons.REPLAY, 
-                              icon_color="#6b6773",
+                              icon_color="#D1D1D1",
                               on_click=lambda _, w=word: self.word_add(page, _, w)),
                 ft.Text(word, size=20, selectable=True)
                 ], spacing=10)

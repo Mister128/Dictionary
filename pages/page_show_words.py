@@ -4,13 +4,8 @@ import pages.page_trash
 import settings
 from flet_route import Params, Basket
 
-class ShowWords:
+class PageShowWords:
     def __init__(self):
-        """ Initializes the class attributes. Attributes: 
-        `result_data` – A container to display a list of words. 
-        `selected_words` – A set that keeps track of selected words. 
-        `select_all_checkbox` – A checkbox to select all words at once. """
-
         self.result_data = None
         self.selected_words = set()
         self.select_all_checkbox = None 
@@ -96,7 +91,7 @@ class ShowWords:
             return
         old_value = script.get_words()[index]
         script.remove_i_paragraph(old_value)
-        script.add(new_value)
+        script.add_word(new_value)
         self.result_data.controls[index].controls[2] = ft.Text(script.get_words()[index], size=20, selectable=True)
         self.result_data.controls[index].controls[1] = ft.IconButton(
             icon=ft.icons.CREATE_OUTLINED,
@@ -117,10 +112,7 @@ class ShowWords:
 
     #----------------------------------------------------------------------------
 
-    def view(self, page: ft.Page, params, basket: Basket):
-        """Generates the layout for displaying a list of words. 
-        Returns a view object containing the elements necessary for the display of words. """
-        
+    def view(self, page: ft.Page, params, basket: Basket):        
         page.title = "Dictionary"
         page.window.height = 850
         page.window.resizable = True

@@ -8,9 +8,11 @@ def main(page: ft.Page):
         data = json.load(f)
         settings.add_word_color = str(data["add_word_color"])
         settings.show_words_color = str(data["show_words_color"])
+        settings.dictionary = str(data["dictionary"])
+        settings.theme = str(data["theme"])
 
     page.window.full_screen = False
-    page.theme_mode = "dark"
+    page.theme_mode = settings.theme
     page.window.resizable = False
     page.window.alignment = ft.alignment.top_center
     Router(page)

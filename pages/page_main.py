@@ -2,9 +2,8 @@ import flet as ft
 from flet_route import Params, Basket
 import settings
 
-class MainPage:
+class PageMain:
     def view(self, page: ft.Page, params, basket: Basket):
-
         page.title = "Dictionary"
         page.window.width = 500
         page.window.height = 400
@@ -47,20 +46,21 @@ class MainPage:
 
         bottom_row = ft.Row([
             ft.IconButton(icon=ft.icons.SETTINGS, 
-                          icon_color='#6b6773',
+                          icon_color='#D1D1D1',
                           on_click=lambda e: page.go('/settings')),
             ft.Container(content=ft.Text("Trash"),
                         alignment=ft.alignment.center,
                         on_click=lambda e: page.go('/trash'),
                         ink=True,
-                        ink_color="#6b6773",
+                        ink_color="#D1D1D1",
                         width=50,
                         height=50,
-                        border=ft.border.all(1, "#6b6773"),
+                        border=ft.border.all(1, "#D1D1D1"),
                         border_radius=10)
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN
         )
+
         #----------------------------------------------------------------------------
 
         return ft.View(

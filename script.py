@@ -1,8 +1,9 @@
 from docx import Document
 from docx.shared import Pt
+import settings
 
-def add(new):
-    document = Document('./dictionary/Dictionary.docx')
+def add_word(new):
+    document = Document(f'./dictionaries/{settings.dictionary}')
 
     core_properties = document.core_properties
     core_properties.author = "Dictionary"
@@ -26,10 +27,17 @@ def add(new):
         font = run.font
         font.size = Pt(18)
 
-    document.save('./dictionary/Dictionary.docx')
+    document.save(f'./dictionaries/{settings.dictionary}')
+
+def add_dictionary(name):
+    Document().save(f"./dictionaries/{name}.docx")
+
+# def rename_dictionary(name, new_name):
+#     document = Document(f"./dictionaries/{name}")
+#     document.save(f"./dictionaries/{new_name}")
 
 def remove_i_paragraph(paragraph):
-    document = Document('./dictionary/Dictionary.docx')
+    document = Document(f'./dictionaries/{settings.dictionary}')
 
     core_properties = document.core_properties
     core_properties.author = "Dictionary"
@@ -42,7 +50,7 @@ def remove_i_paragraph(paragraph):
             delete_paragraph(i)
             break
 
-    document.save('./dictionary/Dictionary.docx')
+    document.save(f'./dictionaries/{settings.dictionary}')
 
 def delete_paragraph(paragraph):
     p = paragraph._element
@@ -50,8 +58,7 @@ def delete_paragraph(paragraph):
     p._p = p._element = None
 
 def get_words():
-    document = Document('./dictionary/Dictionary.docx')
-
+    document = Document(f'./dictionaries/{settings.dictionary}')
     a = []
     for i in document.paragraphs:
         if i != '':
