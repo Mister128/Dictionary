@@ -24,7 +24,9 @@ colors = {
 }
 
 def files_list(directory):
-    return os.listdir(directory)
+    all_files = os.listdir(directory)
+    docx_files = [file for file in all_files if file.endswith('.docx')]
+    return docx_files
 
 def push_changes_to_json():
     os.remove("preset.json")
