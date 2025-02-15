@@ -8,19 +8,23 @@ class PageTrash:
     def __init__(self):
         self.trash = None
 
-    def word_add(self, page, e, word):
-        script.add_word(word)
-        trash_list.remove(word)
-        self.trash.controls.pop(e.control.parent.index)
-        page.update()
+    def find_and_delete_row_by_text(self, text):
+        """Находит и удаляет строку с указанным текстом."""
+        for control in self.trash.controls[:]:  # Проход по копии списка для безопасного удаления
+            if isinstance(control, ft.Row) and control.controls[1].value == text:
+                self.trash.controls.remove(control)
+                break
 
-    #----------------------------------------------------------------------------
+    def word_add(self, page, e, word):
+        if word in trash_list:
+            script.add_word(word)
+            trash_list.remove(word)
+            self.find_and_delete_row_by_text(word)  # Ищем и удаляем строку с нужным текстом
+            page.update()
 
     def view(self, page: ft.Page, params, basket: Basket):
         page.window.height = 600
         page.title = "trash"
-
-        #----------------------------------------------------------------------------
 
         self.trash = ft.ListView(height=400, expand=0, spacing=10, clip_behavior=ft.ClipBehavior.ANTI_ALIAS)
 
@@ -41,20 +45,15 @@ class PageTrash:
                             on_click=lambda e: page.go('/'), 
                             icon_color="#D1D1D1")
         
-        #----------------------------------------------------------------------------
-        
         for i, word in enumerate(trash_list):
             trash_container.offset = ft.transform.Offset(0, 0)
             row = ft.Row([
                 ft.IconButton(icon=ft.icons.REPLAY, 
                               icon_color="#D1D1D1",
-                              on_click=lambda _, w=word: self.word_add(page, _, w)),
+                              on_click=lambda e, w=word: self.word_add(page, e, w)),
                 ft.Text(word, size=20, selectable=True)
                 ], spacing=10)
-            row.index = i
             self.trash.controls.append(row)
-
-        #----------------------------------------------------------------------------
 
         return ft.View(
             "/trash",
