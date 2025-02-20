@@ -10,7 +10,7 @@ class PageTrash:
 
     def find_and_delete_row_by_text(self, text):
         """Находит и удаляет строку с указанным текстом."""
-        for control in self.trash.controls[:]:  # Проход по копии списка для безопасного удаления
+        for control in self.trash.controls[:]: 
             if isinstance(control, ft.Row) and control.controls[1].value == text:
                 self.trash.controls.remove(control)
                 break
@@ -19,8 +19,10 @@ class PageTrash:
         if word in trash_list:
             script.add_word(word)
             trash_list.remove(word)
-            self.find_and_delete_row_by_text(word)  # Ищем и удаляем строку с нужным текстом
+            self.find_and_delete_row_by_text(word) 
             page.update()
+
+    #----------------------------------------------------------------------------
 
     def view(self, page: ft.Page, params, basket: Basket):
         page.window.height = 600
@@ -44,6 +46,8 @@ class PageTrash:
         back = ft.IconButton(icon=ft.icons.ARROW_BACK, 
                             on_click=lambda e: page.go('/'), 
                             icon_color="#D1D1D1")
+
+        #----------------------------------------------------------------------------
         
         for i, word in enumerate(trash_list):
             trash_container.offset = ft.transform.Offset(0, 0)
@@ -54,6 +58,8 @@ class PageTrash:
                 ft.Text(word, size=20, selectable=True)
                 ], spacing=10)
             self.trash.controls.append(row)
+
+        #----------------------------------------------------------------------------
 
         return ft.View(
             "/trash",
