@@ -191,7 +191,7 @@ class PageShowWords:
                          on_click=lambda _: self.bulk_delete(page))
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN)
 
-        txt_search = ft.TextField(label="Search", on_change=search_now)
+        txt_search = ft.TextField(label="Search", on_change=search_now, border_color=settings.show_words_color)
 
         #----------------------------------------------------------------------------
 

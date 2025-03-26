@@ -43,7 +43,7 @@ class PageDictionayList:
         """Deletes multiple selected files at once. 
         Removes the selected files from the folder."""
 
-        files_to_delete = [settings.files_list('./dictionaries')[i] for i in sorted(self.selected_files, reverse=True)]
+        files_to_delete = [settings.files_list()[i] for i in sorted(self.selected_files, reverse=True)]
 
         updated_rows = []
         for i, row in enumerate(self.result_data.controls):
@@ -65,7 +65,7 @@ class PageDictionayList:
         Allows the user to edit a file name through a text input box."""
 
         index = e.control.parent.index
-        filename = settings.files_list('./dictionaries')[index]
+        filename = settings.files_list()[index]
         edit_filename = ft.TextField(label=f'Edit "{filename}":', value=filename[:-5], width=200)
         confirm_button = ft.ElevatedButton(
             "Confirm Edit",
@@ -86,7 +86,17 @@ class PageDictionayList:
         new_value = edit_field.value.strip()
         if not new_value:
             return
-        old_filename = settings.files_list('./dictionaries')[index]
+        if f"{new_value}.docx" in settings.files_list(): 
+            page.open(ft.AlertDialog(
+                title=ft.Row(
+                controls=[
+                    ft.Icon(ft.icons.WARNING_SHARP,
+                            color="#D1D1D1",
+                            size=50),
+                    ft.Text("This name is already exist!")]
+            )))
+            return
+        old_filename = settings.files_list()[index]
         settings.rename_file(old_filename, new_value)
         self.result_data.controls[index].controls[2] = ft.Text(new_value + '.docx', size=20, selectable=True)
         self.result_data.controls[index].controls[1] = ft.IconButton(
@@ -99,7 +109,7 @@ class PageDictionayList:
         """Cancels the editing process and reverts back to the original file name. 
         Resets the file name to its initial state and closes the editing window."""
 
-        filename = settings.files_list('./dictionaries')[index]
+        filename = settings.files_list()[index]
         self.result_data.controls[index].controls[2] = ft.Text(filename, size=20, selectable=True)
         self.result_data.controls[index].controls[1] = ft.IconButton(
             icon=ft.icons.CREATE_OUTLINED,
@@ -112,7 +122,7 @@ class PageDictionayList:
     def view(self, page: ft.Page, params, basket: Basket):
         page.title = "Dictionary Files"
         
-        files = settings.files_list('./dictionaries')
+        files = settings.files_list()
 
         upper_row = ft.Row([
             ft.IconButton(icon=ft.icons.ARROW_BACK,
